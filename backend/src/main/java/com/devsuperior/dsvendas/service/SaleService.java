@@ -10,22 +10,24 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 public class SaleService {
 
     @Autowired
-    private SaleRepository repository;
+    private final SaleRepository repository;
 
     @Autowired
-    private SellerRepository sellerRepository;
+    private final SellerRepository sellerRepository;
+
+    public SaleService(SaleRepository repository, SellerRepository sellerRepository) {
+        this.repository = repository;
+        this.sellerRepository = sellerRepository;
+    }
 
     @Transactional(readOnly = true)
     public Page<SaleDTO> findAll(Pageable pageable) {
         sellerRepository.findAll();
         Page<Sale> result = repository.findAll(pageable);
-        return result.map(x -> new SaleDTO(x));
+        return result.map(SaleDTO::new);
     }
 }

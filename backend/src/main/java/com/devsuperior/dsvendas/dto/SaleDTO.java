@@ -16,7 +16,7 @@ public class SaleDTO {
 
     private SellerDTO seller;
 
-    public SaleDTO(Sale entity){
+    public SaleDTO(Sale entity) {
         id = entity.getId();
         visited = entity.getVisited();
         deals = entity.getDeals();
